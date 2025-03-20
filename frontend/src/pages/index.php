@@ -1,8 +1,9 @@
 <?php
 /** 
-    Template File for index page
-
-    (c) 2025, Andrei S. Osintsev
+ *  Template File for index page
+ * 
+ * (c) 2025, Andrei S. Osintsev
+ *  
 */
 
 function getPageContent($request_uri) {
@@ -13,7 +14,7 @@ function getPageContent($request_uri) {
             <meta charset="UTF-8">
             <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
             <meta http-equiv="X-UA-Compatible" content="ie=edge">
-            <title>Clkme.ru</title>
+            <title>'. TITLE . '</title>
         </head>
         <body>
             <h1>Вы пытаетесь перейти по ссылке:</h1>
@@ -22,6 +23,4 @@ function getPageContent($request_uri) {
         </body>
         </html>
     ';
-    }
-?>
-
+}

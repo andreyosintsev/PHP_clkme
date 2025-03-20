@@ -1,0 +1,38 @@
+{
+  "name": "clkme.ru",
+  "version": "1.0.0",
+  "description": "a link shorting service",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build --emptyOutDir",
+    "preview": "vite preview",
+    "serve": "vite serve"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/andreyosintsev/PHP_clkme.git"
+  },
+  "keywords": [
+    "php",
+    "js",
+    "tailwindcss",
+    "mysql"
+  ],
+  "author": "Andrey \"Kintaro Oe\" Osintsev",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/andreyosintsev/PHP_clkme/issues"
+  },
+  "homepage": "https://github.com/andreyosintsev/PHP_clkme#readme",
+  "devDependencies": {
+    "@types/node": "^22.13.10",
+    "typescript": "^5.8.2",
+    "vite": "^6.2.2"
+  },
+  "dependencies": {
+    "@tailwindcss/vite": "^4.0.14",
+    "tailwindcss": "^4.0.14"
+  }
+}
