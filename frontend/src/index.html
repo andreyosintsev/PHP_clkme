@@ -7,13 +7,104 @@
 
     <link href="styles.css" rel="stylesheet">
 </head>
-<body>
-    <h1 class="text-3xl font-bold">
-        clkme.ru
-    </h1>
-    <p class="text-xl text-center">
-        Просто введите вашу ссылку ниже и получите короткий вариант    
-    </p>
+<body >
+    <header>
+        <h1 class="text-2xl font-bold">
+            clkme.ru - создание коротких ссылок
+        </h1>
+    </header>
+    <div class="
+        flex
+        flex-col
+        justify-center
+        items-center
+        h-screen
+        p-[16px]
+        bg-gray-100">
+        <p class="text-xl text-center mb-[20px]">
+            Просто введите вашу ссылку ниже и получите короткий вариант    
+        </p>
+        <form class="
+                form
+                flex
+                flex-row
+                justify-between
+                item-center
+                gap-2 
+                w-full
+                max-w-[600px]" action="">
+            <input class="
+                form__input
+                w-full
+                p-3
+                text-lg
+                border-2 
+                border-gray-300 
+                rounded-lg   
+                outline-none
+                transition-all
+                duration-200
+                focus:border-blue-500
+                " type="text" placeholder="Ваша ссылка">
+            <button class="
+                w-25
+                px-4    
+                py-2
+                font-medium 
+                text-white
+                bg-blue-600
+                rounded-lg
+                transition-all
+                duration-200
+                cursor-pointer
+                hover:bg-blue-700
+                " type="submit">Создать</button>
+        </form>
+        <div class="
+            result
+            opacity-0
+            w-full
+            max-w-[600px]
+            mt-2
+            transition-all
+            duration-400">
+            <h2>Короткая ссылка</h2>
+            <form class="
+                    flex
+                    flex-row
+                    justify-between
+                    item-center
+                    gap-2" action="">
+                <input class="
+                    w-full
+                    p-3
+                    text-lg
+                    border-2 
+                    border-gray-300 
+                    rounded-lg   
+                    transition-all
+                    duration-200
+                    outline-none
+                    focus:border-gray-500
+                    " type="text" placeholder="Ваша ссылка">
+                <button class="
+                    w-25
+                    px-4    
+                    py-2
+                    font-medium 
+                    text-white
+                    bg-gray-400
+                    bg-[url('images/copy.svg')] bg-center bg-no-repeat bg-[length:40px_30px]
+                    rounded-lg
+                    transition-all
+                    duration-200
+                    cursor-pointer
+                    hover:bg-gray-500
+                    " type="submit"></button>
+            </form>
+        </div>
+    </div>
+
     <script src="main.ts" type="module"></script>
 </body>
 </html>
