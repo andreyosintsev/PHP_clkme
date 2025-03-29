@@ -47,7 +47,7 @@ function submitFormHandler(e: Event, elementInput: HTMLInputElement): void {
         setResult(elementResult as HTMLElement, 'Сокращённая ссылка');
     } else {
         setErrorInput(elementInput);
-        elementInput.value = 'Неверная сылка';
+        elementInput.value = 'Неверная ссылка';
     }
 }
 
@@ -86,22 +86,29 @@ function checkInput(inputElement: HTMLElement): boolean {
     const isValid = /^[^\s.]+\.(?![0-9]+$)[a-zA-Zа-яА-ЯёЁ0-9]{2,}$/.test(inputElement.value);
     
     // inputElement.classList.toggle('focus:border-none', !isValid && inputElement.value.length > 0);    
-    inputElement.classList.toggle('focus:border-red-500', !isValid && inputElement.value.length > 0);    
-    inputElement.classList.toggle('border-red-500', !isValid && inputElement.value.length > 0);
+    inputElement.classList.toggle('focus:border-red-500', !isValid/* && inputElement.value.length > 0*/);
+    inputElement.classList.toggle('border-red-500', !isValid/* && inputElement.value.length > 0*/);
 
     return isValid;
 }
 
 function setErrorInput(inputElement: HTMLElement): void {
+    console.log('setErrorInput');
     if (!inputElement) return console.error('DOM: no input element found');
 
     inputElement.classList.add('text-red-500');
+
+    inputElement.classList.add('focus:border-red-500');
+    inputElement.classList.add('border-red-500');
 }
 
 function removeErrorInput(inputElement: HTMLElement): void {
     if (!inputElement) return console.error('DOM: no input element found');
 
     inputElement.classList.remove('text-red-500');
+
+    inputElement.classList.remove('focus:border-red-500');
+    inputElement.classList.remove('border-red-500');
 }
 
 function setResult(element: HTMLElement, result: string = ''): void {
