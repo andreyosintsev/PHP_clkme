@@ -1,22 +1,54 @@
 document.addEventListener("DOMContentLoaded", () => {
+    let inputValue = '';
+
     const elementForm = document.querySelector('.form');
     if (!elementForm) return console.error('DOM: no form element found');
 
     const elementInput = document.querySelector('.form__input');
     if (!elementInput) return console.error('DOM: no input element found');
 
-    elementForm.addEventListener('submit', submitFormHandler);
-    elementInput.addEventListener('input', checkInput);
+    const elementResult = document.querySelector('.result');
+    if (!elementResult) return console.error('DOM: no result element found');
+
+    elementForm.addEventListener('submit', (e) => submitFormHandler(e, elementInput as HTMLInputElement));
+    elementInput.addEventListener('input', (e) => {
+        if (e && e.target instanceof HTMLInputElement) {
+            inputValue = e.target.value;
+            hideElement(elementResult as HTMLElement);
+            checkInput(e.target);
+        } 
+    });
+    elementInput.addEventListener('focus', (e) => {
+        if (e && e.target instanceof HTMLInputElement) {
+            e.target.value = inputValue;
+            removeErrorInput(e.target);
+        }
+    });
+    elementResult.addEventListener('submit', (e) => {
+        e.preventDefault();
+
+        const inputResult = elementResult.querySelector('.result__input');
+        if (!(inputResult && inputResult instanceof HTMLInputElement)) {
+            return console.error('DOM: no result input element found');
+        }
+        copyToClipboard(inputResult.value);
+    });
 })
 
-function submitFormHandler(e: Event): void {
+function submitFormHandler(e: Event, elementInput: HTMLInputElement): void {
     e.preventDefault();
 
     const elementResult = document.querySelector('.result');
 
     if (!elementResult) return console.error('DOM: no result element found');
 
-    showElement(elementResult as HTMLElement);
+    if (checkInput(elementInput)) {
+        showElement(elementResult as HTMLElement);
+        setResult(elementResult as HTMLElement, 'Сокращённая ссылка');
+    } else {
+        setErrorInput(elementInput);
+        elementInput.value = 'Неверная сылка';
+    }
 }
 
 function showElement(element: HTMLElement): void {
@@ -39,13 +71,16 @@ function resetForm(elementForm: HTMLFormElement): void {
     elementForm.reset();
 }
 
-function checkInput(e: Event): void {
-    console.log('Input!');
+function checkInput(inputElement: HTMLElement): boolean {
+    if (!inputElement) {
+        console.error('DOM: no input element found');
+        return false;
+    }
     
-    const inputElement = e.target;
-    if (!inputElement) return console.error('DOM: no input element found');
-    if (!(inputElement instanceof HTMLInputElement)) return console.error('DOM: input element is not HTMLInputElement');
-
+    if (!(inputElement instanceof HTMLInputElement)) {
+        console.error('DOM: input element is not HTMLInputElement');
+        return false;
+    }
 
     // const isValid = /^[^\s.]+\.[^\s.]{2,}$/.test(inputElement.value);
     const isValid = /^[^\s.]+\.(?![0-9]+$)[a-zA-Zа-яА-ЯёЁ0-9]{2,}$/.test(inputElement.value);
@@ -53,4 +88,41 @@ function checkInput(e: Event): void {
     // inputElement.classList.toggle('focus:border-none', !isValid && inputElement.value.length > 0);    
     inputElement.classList.toggle('focus:border-red-500', !isValid && inputElement.value.length > 0);    
     inputElement.classList.toggle('border-red-500', !isValid && inputElement.value.length > 0);
+
+    return isValid;
 }
+
+function setErrorInput(inputElement: HTMLElement): void {
+    if (!inputElement) return console.error('DOM: no input element found');
+
+    inputElement.classList.add('text-red-500');
+}
+
+function removeErrorInput(inputElement: HTMLElement): void {
+    if (!inputElement) return console.error('DOM: no input element found');
+
+    inputElement.classList.remove('text-red-500');
+}
+
+function setResult(element: HTMLElement, result: string = ''): void {
+    console.log(element);
+    console.log(result);
+    if (!element) return console.error('DOM: no element found');
+
+    const elementResult = document.querySelector('.result__input');
+    if (!(elementResult && elementResult instanceof HTMLInputElement)) {
+        return console.error('DOM: no result element found');
+    }
+
+    elementResult.value = result;
+}
+
+const copyToClipboard = (text: string) => {
+    const textarea = document.createElement("textarea");
+    textarea.value = text;
+    document.body.appendChild(textarea);
+    textarea.select();
+    document.execCommand("copy");
+    document.body.removeChild(textarea);
+    console.log(`${text} copied to clipboard`);
+  };

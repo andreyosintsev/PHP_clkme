@@ -22,7 +22,7 @@
         p-[16px]
         bg-gray-100">
         <p class="text-xl text-center mb-[20px]">
-            Просто введите вашу ссылку ниже и получите короткий вариант    
+            Введите вашу ссылку ниже и нажмите "Создать"
         </p>
         <form class="
                 form
@@ -57,8 +57,10 @@
                 transition-all
                 duration-200
                 cursor-pointer
-                hover:bg-blue-700
-                " type="submit">Создать</button>
+                hover:bg-blue-700"
+                type="submit"
+                title="Создать короткую ссылку"
+                >Создать</button>
         </form>
         <div class="
             result
@@ -76,18 +78,22 @@
                     item-center
                     gap-2" action="">
                 <input class="
+                    result__input
                     w-full
                     p-3
                     text-lg
+                    bg-gray-200
                     border-2 
                     border-gray-300 
                     rounded-lg   
                     transition-all
                     duration-200
                     outline-none
-                    focus:border-gray-500
-                    " type="text" placeholder="Ваша ссылка">
+                    focus:border-gray-300
+                    select-all
+                    " type="text" placeholder="Ваша ссылка" readonly>
                 <button class="
+                    result__button
                     w-25
                     px-4    
                     py-2
@@ -99,8 +105,9 @@
                     transition-all
                     duration-200
                     cursor-pointer
-                    hover:bg-gray-500
-                    " type="submit"></button>
+                    hover:bg-gray-500"
+                    title="Скопировать в буфер обмена"
+                    type="submit"></button>
             </form>
         </div>
     </div>
