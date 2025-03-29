@@ -83,7 +83,9 @@ function checkInput(inputElement: HTMLElement): boolean {
     }
 
     // const isValid = /^[^\s.]+\.[^\s.]{2,}$/.test(inputElement.value);
-    const isValid = /^[^\s.]+\.(?![0-9]+$)[a-zA-Zа-яА-ЯёЁ0-9]{2,}$/.test(inputElement.value);
+    // const isValid = isValidUrl(inputElement.value);
+
+    const isValid = /^[^\s.]+\.(?![0-9]{2})([^\s]{2,})$/.test(inputElement.value);
     
     // inputElement.classList.toggle('focus:border-none', !isValid && inputElement.value.length > 0);    
     inputElement.classList.toggle('focus:border-red-500', !isValid/* && inputElement.value.length > 0*/);
@@ -133,3 +135,15 @@ const copyToClipboard = (text: string) => {
     document.body.removeChild(textarea);
     console.log(`${text} copied to clipboard`);
   };
+
+  function isValidUrl(url: string) {
+    console.log('url: ', url);
+    try {
+        new URL(url);
+        console.log('valid URL');
+        return true;
+    } catch {
+        console.log('invalid URL');
+        return false;
+    }
+  }
