@@ -1,0 +1,11 @@
+{
+    "ru": {
+        "errorNetwork": "Ошибка сети, пожалуйста, повторите попытку позже",
+        "invalidUrl": "Некорректная ссылка"
+    },
+
+    "en": {
+        "errorNetwork": "Network error, please try again later",
+        "invalidUrl": "Invalid URL"
+    }
+}

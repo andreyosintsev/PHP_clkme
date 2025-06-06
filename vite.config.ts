@@ -4,6 +4,7 @@ import tailwindcss from '@tailwindcss/vite';
 
 export default defineConfig({
   root: path.resolve(__dirname, 'frontend/src'),
+  envDir: path.resolve(__dirname, './'),
   build: {
     target: 'es6',
     rollupOptions: {

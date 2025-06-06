@@ -1,4 +1,8 @@
 <?php
+    header("Access-Control-Allow-Origin: *");
+    header("Access-Control-Allow-Methods: GET, POST, OPTIONS");
+    header("Access-Control-Allow-Headers: Content-Type");
+    
     require('config.php');
     require('functions.php');
 
@@ -10,22 +14,17 @@
     $connect = new mysqli(SERVER_NAME, DB_USER, DB_PASS, DB_NAME);
 
     if ($connect->connect_error) {
+        echo json_encode([
+            'result' => 'failed',
+            'message' => 'DB connection error',
+        ]);
         exit("Ошибка подключения: " . $connect->connect_error);
     }
 
     $connect->close();
 
-    $request_uri = $_SERVER['REQUEST_URI'];
-    $to = 'https://yandex.ru';
-
-    if ($request_uri == '/yandex') {
-       
-        header('Location: '. $to, true, 301);
-        exit();
-
-    } else {
-
-        require('pages/index.php');
-        print_r(getPageContent($request_uri));
-
-    }
+    echo json_encode([
+        'result' => 'success',
+        'message' => 'success',
+        'shortLink' => 'clkme.ru/shortlink'
+    ]);

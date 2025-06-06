@@ -1,3 +1,8 @@
+import { apiUrl, apiGetShortLink, copyToClipboard } from './scripts/index';
+import { _t, setLanguage } from './scripts/language';
+
+setLanguage('ru');
+
 document.addEventListener("DOMContentLoaded", () => {
     let inputValue = '';
 
@@ -43,11 +48,29 @@ function submitFormHandler(e: Event, elementInput: HTMLInputElement): void {
     if (!elementResult) return console.error('DOM: no result element found');
 
     if (checkInput(elementInput)) {
-        showElement(elementResult as HTMLElement);
-        setResult(elementResult as HTMLElement, 'Сокращённая ссылка');
+
+        try {
+            apiGetShortLink(elementInput.value, apiUrl)
+            .then((url) => {
+                console.log('apiGetShortLink got result');
+                showElement(elementResult as HTMLElement);
+                setResult(elementResult as HTMLElement, url);
+            })
+            .catch ((error) => {
+                setErrorInput(elementInput);
+                elementInput.value = _t('errorNetwork');
+                console.error(error);
+            })
+        }
+        catch (error) {
+                setErrorInput(elementInput);
+                elementInput.value = _t('errorNetwork');
+                console.error(error);
+        }
+
     } else {
         setErrorInput(elementInput);
-        elementInput.value = 'Неверная ссылка';
+        elementInput.value = _t('invalidUrl');
     }
 }
 
@@ -82,10 +105,7 @@ function checkInput(inputElement: HTMLElement): boolean {
         return false;
     }
 
-    // const isValid = /^[^\s.]+\.[^\s.]{2,}$/.test(inputElement.value);
-    // const isValid = isValidUrl(inputElement.value);
-
-    const isValid = /^[^\s.]+\.(?![0-9]{2})([^\s]{2,})$/.test(inputElement.value);
+    const isValid = /^(?!.*\s)(?!.*\.\d{2}(\/|$))([a-zA-Z0-9-]+\.)+[a-zA-Z]{2,}(\/[^\s?#]*)?(\?[^\s#]*)?$/.test(inputElement.value);
     
     // inputElement.classList.toggle('focus:border-none', !isValid && inputElement.value.length > 0);    
     inputElement.classList.toggle('focus:border-red-500', !isValid/* && inputElement.value.length > 0*/);
@@ -114,8 +134,6 @@ function removeErrorInput(inputElement: HTMLElement): void {
 }
 
 function setResult(element: HTMLElement, result: string = ''): void {
-    console.log(element);
-    console.log(result);
     if (!element) return console.error('DOM: no element found');
 
     const elementResult = document.querySelector('.result__input');
@@ -126,17 +144,7 @@ function setResult(element: HTMLElement, result: string = ''): void {
     elementResult.value = result;
 }
 
-const copyToClipboard = (text: string) => {
-    const textarea = document.createElement("textarea");
-    textarea.value = text;
-    document.body.appendChild(textarea);
-    textarea.select();
-    document.execCommand("copy");
-    document.body.removeChild(textarea);
-    console.log(`${text} copied to clipboard`);
-  };
-
-  function isValidUrl(url: string) {
+function isValidUrl(url: string) {
     console.log('url: ', url);
     try {
         new URL(url);
@@ -146,4 +154,4 @@ const copyToClipboard = (text: string) => {
         console.log('invalid URL');
         return false;
     }
-  }
+}
